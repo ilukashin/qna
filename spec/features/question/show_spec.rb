@@ -6,8 +6,10 @@ feature 'Show list of questions', %q{
   I'd like to see list of all questions
 } do
 
+  let(:user) { create(:user) }
+
   describe 'If questions exists' do
-    given!(:questions) { create_list(:question, 3) }
+    given!(:questions) { create_list(:question, 3, author: user) }
 
     scenario 'User got list of all questions' do
       visit questions_path

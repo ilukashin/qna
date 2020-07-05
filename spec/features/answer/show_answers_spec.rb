@@ -6,8 +6,10 @@ feature 'show all answers to the question', %q{
   I'd like to see all answers to current question
 } do
 
+  let(:user) { create(:user) }
+
   describe 'if question have some answers' do
-    given!(:question) { create(:question) }
+    given!(:question) { create(:question, author: user) }
     given!(:answers) { create_list(:answer, 3, question: question) }
     before { visit question_path(question) }
 
@@ -19,7 +21,7 @@ feature 'show all answers to the question', %q{
   end
 
   describe 'if question do not have answers' do
-    given!(:question) { create(:question) }
+    given!(:question) { create(:question, author: user) }
     before { visit question_path(question) }
 
     scenario 'user got message' do

@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  let(:question) { create(:question) }
+  let(:user) { create(:user) }
+  let(:question) { create(:question, author: user) }
 
   describe 'GET #show' do
     let(:answer) { create(:answer, question: question) }
@@ -18,7 +19,6 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'GET #new' do
-    let(:user) { create(:user) }
     before { login(user) }
 
     before { get :new, params: { question_id: question } }
@@ -33,7 +33,6 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'POST #create' do
-    let(:user) { create(:user) }
     before { login(user) }
 
     context 'with valid attributes' do
