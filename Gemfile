@@ -27,6 +27,7 @@ gem 'jbuilder', '~> 2.7'
 
 # Use Slim to render views
 gem 'slim-rails'
+gem 'devise'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
@@ -55,6 +56,7 @@ group :test do
   gem 'webdrivers'
   gem 'shoulda-matchers'
   gem 'rails-controller-testing'
+  gem 'launchy'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
