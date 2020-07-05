@@ -12,11 +12,10 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.new(answer_params)
     if @answer.save
-      redirect_to @answer
+      redirect_to @answer.question
     else
-      render :new
+      redirect_to @answer.question, notice: @answer.errors.full_messages.join(' ')
     end
-
   end
 
   private
