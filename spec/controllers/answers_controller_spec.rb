@@ -18,6 +18,9 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'GET #new' do
+    let(:user) { create(:user) }
+    before { login(user) }
+
     before { get :new, params: { question_id: question } }
 
     it 'assigns a new Answer to @answer' do
@@ -30,6 +33,9 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'POST #create' do
+    let(:user) { create(:user) }
+    before { login(user) }
+
     context 'with valid attributes' do
       it 'saves a new answer in the database' do
         expect { post :create, params: { answer: attributes_for(:answer), question_id: question } }.to change(Answer, :count).by(1)
