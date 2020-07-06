@@ -10,7 +10,7 @@ feature 'show all answers to the question', %q{
 
   describe 'if question have some answers' do
     given!(:question) { create(:question, author: user) }
-    given!(:answers) { create_list(:answer, 3, question: question) }
+    given!(:answers) { create_list(:answer, 3, question: question, author: user) }
     before { visit question_path(question) }
 
     scenario 'user got all answers to current question' do

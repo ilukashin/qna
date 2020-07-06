@@ -5,7 +5,7 @@ RSpec.describe AnswersController, type: :controller do
   let(:question) { create(:question, author: user) }
 
   describe 'GET #show' do
-    let(:answer) { create(:answer, question: question) }
+    let(:answer) { create(:answer, question: question, author: user) }
 
     before { get :show, params: { id: answer } }
 
@@ -37,7 +37,7 @@ RSpec.describe AnswersController, type: :controller do
 
     context 'with valid attributes' do
       it 'saves a new answer in the database' do
-        expect { post :create, params: { answer: attributes_for(:answer), question_id: question } }.to change(Answer, :count).by(1)
+        expect { post :create, params: { answer: attributes_for(:answer), question_id: question, author: user } }.to change(Answer, :count).by(1)
       end
       it 'redirect to #show view' do
         post :create, params: { answer: attributes_for(:answer), question_id: question }
