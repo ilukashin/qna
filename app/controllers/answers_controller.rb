@@ -16,17 +16,18 @@ class AnswersController < ApplicationController
     if @answer.save
       redirect_to @answer.question
     else
-      redirect_to @answer.question, notice: @answer.errors.full_messages.join(' ')
+      flash[:notice] = @answer.errors.full_messages.join(' ')
+      render 'questions/show'
     end
   end
 
   def destroy
     @answer = Answer.find(params[:id])
-    if @answer.author == current_user
+    if current_user&.author_of?(@answer)
       @answer.destroy
-      redirect_to root_path, notice: 'Successfully deleted answer.'
+      redirect_to question_path(@answer.question), notice: 'Successfully deleted answer.'
     else
-      redirect_to @answer, notice: 'Only author can delete this answer.'
+      redirect_to question_path(@answer.question), notice: 'Only author can delete this answer.'
     end
   end
 
