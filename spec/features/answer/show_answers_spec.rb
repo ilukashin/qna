@@ -23,7 +23,7 @@ feature 'show all answers to the question', %q{
     before { visit question_path(question) }
 
     scenario 'user got message' do
-      expect(page).to have_content 'No answers for this question.'
+      expect(page).to_not have_content 'Test answer'
     end
   end
 

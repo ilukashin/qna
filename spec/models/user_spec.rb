@@ -14,6 +14,7 @@ RSpec.describe User, type: :model do
     it 'returns true if user is author of record' do
       expect(user1).to be_author_of(question)
     end
+
     it 'returns false if user is not author of record' do
       expect(user2).to_not be_author_of(question)
     end

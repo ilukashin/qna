@@ -16,7 +16,6 @@ class AnswersController < ApplicationController
     if @answer.save
       redirect_to @answer.question
     else
-      flash[:notice] = @answer.errors.full_messages.join(' ')
       render 'questions/show'
     end
   end
