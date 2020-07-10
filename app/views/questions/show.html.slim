@@ -4,9 +4,9 @@ p= @question.body
 -if current_user&.author_of?(@question)
   p= link_to 'Delete question', question_path(@question), method: :delete
 
-
-h3= 'Answers'
-=render @question.answers
+.answers
+  h3= 'Answers'
+  =render @question.answers
 
 h3= 'Leave your answer'
 =render 'answers/form', answer: @answer

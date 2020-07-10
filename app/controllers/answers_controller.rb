@@ -13,11 +13,16 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.new(answer_params)
     @answer.author = current_user
-    if @answer.save
-      redirect_to @answer.question
-    else
-      render 'questions/show'
-    end
+    @answer.save
+  end
+
+  def edit
+    @answer = Answer.find(params[:id])
+  end
+
+  def update
+    @answer = Answer.find(params[:id])
+    @answer.update(answer_params)
   end
 
   def destroy
