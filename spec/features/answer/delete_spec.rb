@@ -9,7 +9,7 @@ feature 'Author can delete their answer', %q{
   given(:user2) { create(:user) }
   given!(:question) { create(:question, author: user1) }
 
-  describe 'Authenticated user' do
+  describe 'Authenticated user', js: true do
     background { sign_in(user1) }
 
     scenario 'tries to delete their answer' do
@@ -28,7 +28,7 @@ feature 'Author can delete their answer', %q{
     end
   end
 
-  describe 'Unauthenticated user' do
+  describe 'Unauthenticated user', js: true do
     scenario 'tries to delete any answer' do
       create(:answer, question: question, author: user1)
       visit question_path(question)
