@@ -35,6 +35,11 @@ class AnswersController < ApplicationController
     end
   end
 
+  def best
+    @answer = Answer.find(params[:id])
+    @answer.best!
+  end
+
   private
 
   def answer_params

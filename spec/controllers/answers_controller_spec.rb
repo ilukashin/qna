@@ -163,7 +163,51 @@ RSpec.describe AnswersController, type: :controller do
         expect(response).to render_template :update
       end
     end
-
-
   end
+
+  describe 'POST #best' do
+    let!(:answer) { create(:answer, question: question, author: user) }
+    let!(:answer2) { create(:answer, question: question, author: user) }
+
+    context 'author of question choose best answer' do
+      before { login(user) }
+      it 'marks answer as best' do
+        post :best, params: { id: answer, format: :js }
+        answer.reload
+        expect(answer).to be_best
+      end
+
+      it 'only one answer can be best' do
+        post :best, params: { id: answer, format: :js }
+        post :best, params: { id: answer2, format: :js }
+        question.reload
+        expect(question.best_answer_id).to eql(answer2.id)
+      end
+
+      it 'render best view' do
+        post :best, params: { id: answer, format: :js }
+        expect(response).to render_template :best
+      end
+    end
+
+    context 'not author of question' do
+      let(:user2) { create(:user) }
+      before { login(user) }
+
+      it 'cant choose best answer' do
+        post :best, params: { id: answer, format: :js }
+        question.reload
+        expect(question.best_answer_id).to_not eql(answer2.id)
+      end
+    end
+
+    context 'unauthenticated user' do
+      it 'cant choose best answer' do
+        post :best, params: { id: answer, format: :js }
+        question.reload
+        expect(question.best_answer_id).to_not eql(answer2.id)
+      end
+    end
+  end
+
 end
