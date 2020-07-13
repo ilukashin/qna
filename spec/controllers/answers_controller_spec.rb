@@ -180,8 +180,9 @@ RSpec.describe AnswersController, type: :controller do
       it 'only one answer can be best' do
         post :best, params: { id: answer, format: :js }
         post :best, params: { id: answer2, format: :js }
-        question.reload
-        expect(question.best_answer_id).to eql(answer2.id)
+        answer2.reload
+        expect(answer2).to be_best
+        expect(answer).to_not be_best
       end
 
       it 'render best view' do
@@ -196,16 +197,14 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'cant choose best answer' do
         post :best, params: { id: answer, format: :js }
-        question.reload
-        expect(question.best_answer_id).to_not eql(answer2.id)
+        expect(answer).to_not be_best
       end
     end
 
     context 'unauthenticated user' do
       it 'cant choose best answer' do
         post :best, params: { id: answer, format: :js }
-        question.reload
-        expect(question.best_answer_id).to_not eql(answer2.id)
+        expect(answer).to_not be_best
       end
     end
   end
