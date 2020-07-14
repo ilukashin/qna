@@ -1,6 +1,6 @@
 -if answer.persisted?
 
-  div id="answer-#{answer.id}" class=('best' if answer.best?)
+  div id="answer-#{answer.id}" class=('best' if answer.is_best?)
     div class="errors"
     p= answer.body
     -if current_user&.author_of?(answer)

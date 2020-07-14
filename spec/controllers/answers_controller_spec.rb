@@ -81,11 +81,11 @@ RSpec.describe AnswersController, type: :controller do
         let!(:answer) { create(:answer, question: question, author: user) }
 
         it 'can delete the answer' do
-          expect { delete :destroy, params: { id: answer } }.to change(Answer, :count).by(-1)
+          expect { delete :destroy, params: { id: answer }, format: :js }.to change(Answer, :count).by(-1)
         end
         it 'redirects to question' do
-          delete :destroy, params: { id: answer }
-          expect(response).to redirect_to question_path(question)
+          delete :destroy, params: { id: answer }, format: :js
+          expect(response).to render_template :destroy
         end
       end
 
@@ -94,11 +94,11 @@ RSpec.describe AnswersController, type: :controller do
         let!(:answer) { create(:answer, question: question, author: user2) }
 
         it 'can not delete the answer' do
-          expect { delete :destroy, params: { id: answer } }.to_not change(Question, :count)
+          expect { delete :destroy, params: { id: answer }, format: :js }.to_not change(Question, :count)
         end
         it 'redirects to question' do
-          delete :destroy, params: { id: answer }
-          expect(response).to redirect_to question_path(question)
+          delete :destroy, params: { id: answer }, format: :js
+          expect(response).to render_template nil
         end
       end
     end
@@ -107,11 +107,12 @@ RSpec.describe AnswersController, type: :controller do
       let!(:answer) { create(:answer, question: question, author: user) }
 
       it 'can not delete the question' do
-        expect { delete :destroy, params: { id: answer } }.to_not change(Question, :count)
+        expect { delete :destroy, params: { id: answer }, format: :js }.to_not change(Question, :count)
       end
       it 'redirects to login page' do
-        delete :destroy, params: { id: answer }
-        expect(response).to redirect_to new_user_session_path
+        delete :destroy, params: { id: answer }, format: :js
+        expect(response.status).to be(401)
+        expect(response.body).to have_content('You need to sign in or sign up before continuing.')
       end
     end
   end
@@ -158,9 +159,9 @@ RSpec.describe AnswersController, type: :controller do
           patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid), format: :js }
         end.to_not change(answer, :body)
       end
-      it 'render update view' do
+      it 'render nothing' do
         patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid), format: :js }
-        expect(response).to render_template :update
+        expect(response).to render_template nil
       end
     end
   end
@@ -174,15 +175,15 @@ RSpec.describe AnswersController, type: :controller do
       it 'marks answer as best' do
         post :best, params: { id: answer, format: :js }
         answer.reload
-        expect(answer).to be_best
+        expect(answer).to be_is_best
       end
 
       it 'only one answer can be best' do
         post :best, params: { id: answer, format: :js }
         post :best, params: { id: answer2, format: :js }
         answer2.reload
-        expect(answer2).to be_best
-        expect(answer).to_not be_best
+        expect(answer2).to be_is_best
+        expect(answer).to_not be_is_best
       end
 
       it 'render best view' do
@@ -197,14 +198,14 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'cant choose best answer' do
         post :best, params: { id: answer, format: :js }
-        expect(answer).to_not be_best
+        expect(answer).to_not be_is_best
       end
     end
 
     context 'unauthenticated user' do
       it 'cant choose best answer' do
         post :best, params: { id: answer, format: :js }
-        expect(answer).to_not be_best
+        expect(answer).to_not be_is_best
       end
     end
   end

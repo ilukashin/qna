@@ -174,11 +174,9 @@ RSpec.describe QuestionsController, type: :controller do
       end
       it 'render update view' do
         patch :update, params: { id: question, question: attributes_for(:question, :invalid), format: :js }
-        expect(response).to render_template :update
+        expect(response).to render_template nil
       end
     end
-
-
   end
 
 end

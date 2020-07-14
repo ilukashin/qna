@@ -18,20 +18,30 @@ class AnswersController < ApplicationController
   def edit; end
 
   def update
-    @answer.update(answer_params) if current_user&.author_of?(@answer)
+    if current_user&.author_of?(@answer)
+      @answer.update(answer_params)
+      render :update
+    else
+      render body: nil
+    end
   end
 
   def destroy
     if current_user&.author_of?(@answer)
       @answer.destroy
-      redirect_to question_path(@answer.question), notice: 'Successfully deleted answer.'
+      render :destroy
     else
-      redirect_to question_path(@answer.question), notice: 'Only author can delete this answer.'
+      render body: nil
     end
   end
 
   def best
-    @answer.best! if current_user&.author_of?(@answer.question)
+    if current_user&.author_of?(@answer.question)
+      @answer.best!
+      render :best
+    else
+      render body: nil
+    end
   end
 
   private

@@ -25,7 +25,12 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    @question.update(question_params) if current_user&.author_of?(@question)
+    if current_user&.author_of?(@question)
+      @question.update(question_params)
+      render :update
+    else
+      render body: nil
+    end
   end
 
   def destroy
