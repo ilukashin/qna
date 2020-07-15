@@ -29,7 +29,7 @@ class QuestionsController < ApplicationController
       @question.update(question_params)
       render :update
     else
-      render body: nil
+      render head: :forbidden, status: 403
     end
   end
 

@@ -96,9 +96,9 @@ RSpec.describe AnswersController, type: :controller do
         it 'can not delete the answer' do
           expect { delete :destroy, params: { id: answer }, format: :js }.to_not change(Question, :count)
         end
-        it 'redirects to question' do
+        it 'return status 403' do
           delete :destroy, params: { id: answer }, format: :js
-          expect(response).to render_template nil
+          expect(response).to have_http_status(:forbidden)
         end
       end
     end
@@ -159,9 +159,9 @@ RSpec.describe AnswersController, type: :controller do
           patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid), format: :js }
         end.to_not change(answer, :body)
       end
-      it 'render nothing' do
+      it 'return status 403' do
         patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid), format: :js }
-        expect(response).to render_template nil
+        expect(response).to have_http_status(:forbidden)
       end
     end
   end

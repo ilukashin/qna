@@ -172,9 +172,9 @@ RSpec.describe QuestionsController, type: :controller do
           patch :update, params: { id: question, question: attributes_for(:question, :invalid), format: :js }
         end.to_not change(question, :body)
       end
-      it 'render update view' do
+      it 'return status 403' do
         patch :update, params: { id: question, question: attributes_for(:question, :invalid), format: :js }
-        expect(response).to render_template nil
+        expect(response).to have_http_status(:forbidden)
       end
     end
   end

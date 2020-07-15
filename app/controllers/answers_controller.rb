@@ -22,7 +22,7 @@ class AnswersController < ApplicationController
       @answer.update(answer_params)
       render :update
     else
-      render body: nil
+      render head: :forbidden, status: 403
     end
   end
 
@@ -31,7 +31,7 @@ class AnswersController < ApplicationController
       @answer.destroy
       render :destroy
     else
-      render body: nil
+      render head: :forbidden, status: 403
     end
   end
 
@@ -40,7 +40,7 @@ class AnswersController < ApplicationController
       @answer.best!
       render :best
     else
-      render body: nil
+      render head: :forbidden, status: 403
     end
   end
 
