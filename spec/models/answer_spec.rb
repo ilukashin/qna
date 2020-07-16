@@ -9,4 +9,8 @@ RSpec.describe Answer, type: :model do
     it { should have_db_column(:body).of_type(:text).with_options(null: false) }
     it { should have_db_column(:is_best).of_type(:boolean).with_options(null: false, default: false) }
   end
+
+  it 'should has many attached files' do
+    expect(Answer.new.files).to be_an_instance_of(ActiveStorage::Attached::Many)
+  end
 end

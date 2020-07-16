@@ -25,6 +25,18 @@ feature 'add an answer to question', %q{
       click_on 'Answer'
       expect(page).to have_content "Body can't be blank"
     end
+
+    scenario 'add their answer with files to question' do
+      fill_in 'Body', with: 'Custom answer'
+
+      within '.new-answer' do
+        attach_file 'File', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+      end
+      click_on 'Answer'
+
+      expect(page).to have_link 'rails_helper.rb'
+      expect(page).to have_link 'spec_helper.rb'
+    end
   end
 
   describe 'Unauthenticated user' do
