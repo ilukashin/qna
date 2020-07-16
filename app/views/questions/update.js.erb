@@ -2,6 +2,15 @@ $('.question .errors').html("<%= render 'shared/errors', resource: @question %>"
 <% unless @question.errors.present? %>
     $('#question-title').html('<%= @question.title %> ');
     $('#question-body').html('<%= @question.body %> ');
+
+    <% if @question.files.attached? %>
+      $('.question-files').html(`
+        <% @question.files.each do |file| %>
+            <%= j render 'shared/file', file: file %>
+        <% end %>
+      `);
+    <% end %>
+
     $('.edit-question-link').show();
     $('#edit-question-form').addClass('hidden');
 <% end %>

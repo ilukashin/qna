@@ -2,9 +2,10 @@
   .errors
   h1#question-title= @question.title
   p#question-body= @question.body
-  -if @question.files.attached?
-    -@question.files.each do |file|
-      p#question-file= link_to file.filename.to_s, url_for(file)
+  .question-files
+    -if @question.files.attached?
+      -@question.files.each do |file|
+        =render 'shared/file', file: file
 
   -if current_user&.author_of?(@question)
     p= link_to 'Edit question', '#', class: 'edit-question-link'
@@ -16,6 +17,9 @@
 
       = f.label :body
       = f.text_area :body
+
+      = f.label :files
+      = f.file_field :files, multiple: true
 
       = f.submit
 
