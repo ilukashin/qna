@@ -1,4 +1,13 @@
 $('#answer-<%= @answer.id %> .errors').html('<%= render 'shared/errors', resource: @answer %>');
 <% unless @answer.errors.present? %>
     $('#answer-<%= @answer.id %>').html('<%= j render @answer %> ');
+
+    <% if @answer.files.attached? %>
+      $('#answer-<%= @answer.id %> .answer-files').html(`
+        <% @answer.files.each do |file| %>
+            <%= j render 'shared/file', file: file %>
+        <% end %>
+      `);
+    <% end %>
+
 <% end %>
