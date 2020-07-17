@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   root 'questions#index'
 
   resources :questions do
+    member do
+      delete :delete_attached_file
+    end
     resources :answers, shallow: true do
       member do
         post :best
