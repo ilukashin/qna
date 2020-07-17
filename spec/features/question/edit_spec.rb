@@ -63,20 +63,5 @@ feature 'User can edit question', %q{
         expect(page).to have_link 'spec_helper.rb'
       end
     end
-
-    scenario 'Author can delete files', js: true do
-      within '.question' do
-        attach_file 'File', "#{Rails.root}/spec/rails_helper.rb"
-        click_on 'Update Question'
-
-        expect(page).to have_link 'rails_helper.rb'
-      end
-
-      within ('.attached-file') do
-        click_on 'Delete file'
-      end
-
-      expect(page).to_not have_link 'rails_helper.rb'
-    end
   end
 end

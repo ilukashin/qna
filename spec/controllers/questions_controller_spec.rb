@@ -184,7 +184,7 @@ RSpec.describe QuestionsController, type: :controller do
     let(:question) { create(:question, author: user) }
 
     before do
-      question.files.attach(io: File.open("#{Rails.root}/spec/rails_helper.rb"), filename: 'test-file.txt')
+      question.files.attach(io: File.open("#{Rails.root}/spec/rails_helper.rb"), filename: 'rails_helper.rb')
     end
 
     context 'author of question' do
