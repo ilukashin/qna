@@ -5,7 +5,7 @@ $('#answer-<%= @answer.id %> .errors').html('<%= render 'shared/errors', resourc
     <% if @answer.files.attached? %>
       $('#answer-<%= @answer.id %> .answer-files').html(`
         <% @answer.files.each do |file| %>
-            <%= j render 'shared/file', file: file %>
+            <%= j render 'attachments/file', file: file %>
         <% end %>
       `);
     <% end %>

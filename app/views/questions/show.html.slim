@@ -5,7 +5,7 @@
   .question-files
     -if @question.files.attached?
       -@question.files.each do |file|
-        =render 'shared/file', file: file
+        =render 'attachments/file', file: file
 
   -if current_user&.author_of?(@question)
     p= link_to 'Edit question', '#', class: 'edit-question-link'

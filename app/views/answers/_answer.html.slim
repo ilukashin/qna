@@ -6,7 +6,7 @@
     .answer-files
       -if answer.files.attached?
         -answer.files.each do |file|
-          =render 'shared/file', file: file
+          =render 'attachments/file', file: file
 
     -if current_user&.author_of?(answer)
       p= link_to 'Edit answer', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
