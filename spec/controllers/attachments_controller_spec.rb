@@ -4,7 +4,7 @@ RSpec.describe AttachmentsController, type: :controller do
   let(:user) { create(:user) }
   let(:question) { create(:question, author: user) }
 
-  describe 'DELETE #delete_attached_file' do
+  describe 'DELETE #destroy' do
     before do
       question.files.attach(io: File.open("#{Rails.root}/spec/rails_helper.rb"), filename: 'rails_helper.rb')
     end
@@ -12,15 +12,15 @@ RSpec.describe AttachmentsController, type: :controller do
     context 'author of question' do
       before do
         login(user)
-        delete :delete_attached_file, params: { id: question.files.first.id, format: :js }
+        delete :destroy, params: { id: question.files.first.id, format: :js }
       end
 
       it 'should delete attachment' do
         expect(question.files.reload).to be_empty
       end
 
-      it 'should render delete_attached_file view' do
-        expect(response).to render_template :delete_attached_file
+      it 'should render destroy view' do
+        expect(response).to render_template :destroy
       end
     end
 
@@ -29,7 +29,7 @@ RSpec.describe AttachmentsController, type: :controller do
 
       before do
         login(user2)
-        delete :delete_attached_file, params: { id: question.files.first.id, format: :js }
+        delete :destroy, params: { id: question.files.first.id, format: :js }
       end
 
       it 'should not delete attachment' do
