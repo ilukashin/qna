@@ -27,6 +27,7 @@ gem 'jbuilder', '~> 2.7'
 
 # Use Slim to render views
 gem 'slim-rails'
+gem 'cocoon'
 gem 'devise'
 
 # Reduces boot times through caching; required in config/boot.rb
