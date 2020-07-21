@@ -11,6 +11,10 @@ $('.question .errors').html("<%= render 'shared/errors', resource: @question %>"
       `);
     <% end %>
 
+    <% unless @question.links.empty? %>
+      $('.question .links').html("<%= j render 'links/links', resource: @question %>")
+    <% end%>
+
     $('.edit-question-link').show();
     $('#edit-question-form').addClass('hidden');
 <% end %>

@@ -7,15 +7,9 @@
       -@question.files.each do |file|
         =render 'attachments/file', file: file
 
-  - unless @question.links.empty?
-    .links
-      p Links:
-      ul
-        - @question.links.each do |link|
-          li id="link-#{link.id}"
-            p= link_to link.name, link.url
-            - if current_user&.author_of?(@question)
-              = link_to 'Delete link', link_path(link), method: :delete, remote: true
+  .links
+    - unless @question.links.empty?
+      = render 'links/links', resource: @question
 
 
   -if current_user&.author_of?(@question)
@@ -31,6 +25,13 @@
 
       = f.label :files
       = f.file_field :files, multiple: true, direct_upload: true
+
+      .links-form
+        p Links:
+        #question-links
+          = f.fields_for :links do |l|
+            = render 'links/form', f: l
+          = link_to_add_association 'Add link', f, :links, partial: 'links/form'
 
       = f.submit
 

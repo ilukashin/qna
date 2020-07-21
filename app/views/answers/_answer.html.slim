@@ -5,14 +5,7 @@
     p= answer.body
 
     - unless answer.links.empty?
-      .links
-        p Links:
-        ul
-          - answer.links.each do |link|
-            li id="link-#{link.id}"
-              p= link_to link.name, link.url
-              - if current_user&.author_of?(link.linkable)
-                = link_to 'Delete link', link_path(link), method: :delete, remote: true
+      = render 'links/links', resource: answer
 
     .answer-files
       -if answer.files.attached?
@@ -32,5 +25,12 @@
 
       = f.label :files
       = f.file_field :files, multiple: true, direct_upload: true
+
+      .links-form
+        p Links:
+        #question-links
+          = f.fields_for :links do |l|
+            = render 'links/form', f: l
+          = link_to_add_association 'Add link', f, :links, partial: 'links/form'
 
       = f.submit
