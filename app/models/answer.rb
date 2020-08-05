@@ -13,6 +13,7 @@ class Answer < ApplicationRecord
     Answer.transaction do
       question.answers.find_by(is_best: true)&.update!(is_best: false)
       update!(is_best: true)
+      question.reward&.assign_to!(author)
     end unless is_best?
   end
 end
