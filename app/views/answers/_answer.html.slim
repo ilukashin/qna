@@ -3,6 +3,12 @@
   div id="answer-#{answer.id}" class=('best' if answer.is_best?)
     div class="errors"
     p= answer.body
+    .rating
+      span Rating:
+      span#rating= answer.rating
+      -if current_user && !current_user.author_of?(answer)
+        p= link_to 'Up', up_answer_path(answer), method: :patch, remote: true, data: { type: :json }
+        p= link_to 'Down', down_answer_path(answer), method: :patch, remote: true, data: { type: :json }
 
     - unless answer.links.empty?
       = render 'links/links', resource: answer

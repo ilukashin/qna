@@ -3,8 +3,15 @@ Rails.application.routes.draw do
   devise_for :users, path_names: { sign_in: :login, sign_out: :logout }
   root 'questions#index'
 
-  resources :questions do
-    resources :answers, shallow: true do
+  concern :votable do
+    member do
+      patch :up
+      patch :down
+    end
+  end
+
+  resources :questions, concerns: [:votable] do
+    resources :answers, concerns: [:votable], shallow: true do
       member do
         post :best
       end
