@@ -38,7 +38,7 @@ module Votable
   end
 
   def rating
-    self.votes.pluck(:value).sum
+    self.votes.sum(:value)
   end
 
 end

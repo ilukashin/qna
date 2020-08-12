@@ -1,0 +1,6 @@
+.rating
+  span Rating:
+  span#rating= entity_obj.rating
+  -if current_user && !current_user.author_of?(entity_obj)
+    p= link_to 'Up', up_question_path(entity_obj), method: :patch, remote: true, data: { type: :json }
+    p= link_to 'Down', down_question_path(entity_obj), method: :patch, remote: true, data: { type: :json }

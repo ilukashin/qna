@@ -3,12 +3,7 @@
     .errors
     h1#question-title= @question.title
     p#question-body= @question.body
-    .rating
-      span Rating:
-      span#rating= @question.rating
-      -if current_user && !current_user.author_of?(@question)
-        p= link_to 'Up', up_question_path(@question), method: :patch, remote: true, data: { type: :json }
-        p= link_to 'Down', down_question_path(@question), method: :patch, remote: true, data: { type: :json }
+    =render 'shared/rating', entity_obj: @question
 
     .question-files
       -if @question.files.attached?
