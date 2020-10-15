@@ -16,8 +16,10 @@ feature 'add an answer to question', %q{
     end
 
     scenario 'add their answer to question' do
-      fill_in 'Body', with: 'Custom answer'
-      click_on 'Answer'
+      within '.new-answer' do
+        fill_in 'Body', with: 'Custom answer'
+        click_on 'Answer'
+      end
       expect(page).to have_content 'Custom answer'
     end
 
@@ -27,9 +29,8 @@ feature 'add an answer to question', %q{
     end
 
     scenario 'add their answer with files to question' do
-      fill_in 'Body', with: 'Custom answer'
-
       within '.new-answer' do
+        fill_in 'Body', with: 'Custom answer'
         attach_file 'File', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
       end
       click_on 'Answer'
