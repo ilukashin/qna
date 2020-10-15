@@ -12,6 +12,8 @@ require("packs/answers")
 require("packs/questions")
 require("packs/rating")
 require("packs/activestorage")
+require("handlebars")
+require("handlebars-loader")
 
 import 'cocoon-js'
 

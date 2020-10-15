@@ -20,8 +20,10 @@ class CommentsController < ApplicationController
   def find_commentable
     if params[:question_id]
       @commentable = Question.find_by_id(params[:question_id])
+      @question_id = params[:question_id]
     elsif params[:answer_id]
       @commentable = Answer.find_by_id(params[:answer_id])
+      @question_id = @commentable.question.id
     end
   end
 
@@ -29,7 +31,7 @@ class CommentsController < ApplicationController
     return if @comment.errors.any?
 
     ActionCable.server.broadcast(
-        "comment_on_question_#{@comment.commentable.id}",
+        "comment_on_question_#{@question_id}",
         @comment
     )
   end

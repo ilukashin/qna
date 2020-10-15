@@ -3,6 +3,8 @@ class AnswersController < ApplicationController
   before_action :set_question, only: %i[new create]
   before_action :find_answer, only: %i[show edit update destroy best]
 
+  after_action :publish_answer, only: %i[create]
+  
   include Voted
 
   def show; end
@@ -58,5 +60,14 @@ class AnswersController < ApplicationController
 
   def find_answer
     @answer = Answer.with_attached_files.find(params[:id])
+  end
+
+  def publish_answer
+    return if @answer.errors.any?
+
+    ActionCable.server.broadcast(
+        "answer_on_question_#{@answer.question.id}",
+        @answer
+    )
   end
 end
