@@ -35,3 +35,5 @@
           = link_to_add_association 'Add link', f, :links, partial: 'links/form'
 
       = f.submit
+
+    = render 'comments/comments', commentable: answer

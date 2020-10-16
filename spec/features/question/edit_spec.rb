@@ -32,26 +32,27 @@ feature 'User can edit question', %q{
     end
 
     scenario 'can edit his answer' do
-      within '.question' do
+      within '#edit-question-form' do
         fill_in 'Body', with: 'edited question'
         click_on 'Update Question'
 
-        expect(page).to_not have_content question.body
-        expect(page).to have_content 'edited question'
         expect(page).to_not have_selector 'textarea'
       end
 
+        expect(page).to_not have_content question.body
+        expect(page).to have_content 'edited question'
     end
 
     scenario 'tries edit his question with errors' do
-      within '.question' do
+      within '#edit-question-form' do
         fill_in 'Body', with: ''
         click_on 'Update Question'
 
-        expect(page).to have_content question.body
-        expect(page).to have_content "Body can't be blank"
         expect(page).to have_selector 'textarea'
       end
+
+        expect(page).to have_content question.body
+        expect(page).to have_content "Body can't be blank"
     end
 
     scenario 'can attach files' do

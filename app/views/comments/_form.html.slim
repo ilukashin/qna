@@ -1,0 +1,7 @@
+.comment-form
+  p= 'Leave comment:'
+  = form_with model: [commentable, comment] do |f|
+    = f.label :body
+    = f.text_area :body
+
+    = f.submit 'Comment'

@@ -28,25 +28,26 @@ feature 'User can edit answer', %q{
       end
 
       scenario 'can edit his answer' do
-        within '.answers' do
+        within "#edit-answer-#{answer.id}" do
           fill_in 'Body', with: 'edited answer'
           click_on 'Update Answer'
+          
+          expect(page).to have_selector 'textarea'
+        end
 
           expect(page).to_not have_content answer.body
           expect(page).to have_content 'edited answer'
-          expect(page).to_not have_selector 'textarea'
-        end
       end
 
       scenario 'tries edit his answer with errors' do
-        within '.answers' do
+        within "#edit-answer-#{answer.id}" do
           fill_in 'Body', with: ''
           click_on 'Update Answer'
-
-          expect(page).to have_content answer.body
-          expect(page).to have_content "Body can't be blank"
+          
           expect(page).to have_selector 'textarea'
         end
+          expect(page).to have_content answer.body
+          expect(page).to have_content "Body can't be blank"
       end
 
       scenario 'can attach files' do
