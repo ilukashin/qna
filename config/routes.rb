@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   devise_for :users, path_names: { sign_in: :login, sign_out: :logout },
              controllers: { omniauth_callbacks: 'oauth_callbacks' }
+  post '/oauth_email_confirmation', to: 'users#oauth_email_confirmation'
   root 'questions#index'
 
   concern :votable do
