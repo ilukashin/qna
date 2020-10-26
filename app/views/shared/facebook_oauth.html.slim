@@ -1,0 +1,9 @@
+h2 Let us know your e-mail address to finish registration
+
+.errors
+  = render 'shared/errors', resource: @user
+
+= form_with url: oauth_email_confirmation_path, local: true do |form|
+  = form.label :email
+  = form.text_field :email
+  = form.submit
