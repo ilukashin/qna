@@ -17,8 +17,6 @@ module Qna
     # the framework and any gems in your application.
     #
 
-    config.autoload_paths << "#{Rails.root}/app/services"
-
     config.generators do |g|
       g.test_framework :rspec,
                        request_specs: false,
