@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
 
+  skip_authorization_check
+
   def oauth_email_confirmation
     password = Devise.friendly_token[0, 20]
     email = params[:email]

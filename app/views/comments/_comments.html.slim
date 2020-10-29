@@ -3,6 +3,6 @@
     p= "Comments:"
     - commentable.comments.each do |comment|
       = render 'comments/comment', comment: comment
-  - if current_user
+  - if can?(:create, Comment)
     .new-comment
       = render 'comments/form', commentable: commentable, comment: commentable.comments.new
