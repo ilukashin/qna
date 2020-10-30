@@ -90,18 +90,30 @@ RSpec.describe AnswersController, type: :controller do
           expect(response).to render_template :destroy
         end
       end
+
+      context 'is not author' do
+        let(:user2) { create(:user) }
+        let!(:answer) { create(:answer, question: question, author: user2) }
+
+        it 'can not delete the answer' do
+          expect { delete :destroy, params: { id: answer }, format: :js }.to_not change(Question, :count)
+        end
+        it 'return status 403' do
+          delete :destroy, params: { id: answer }, format: :js
+          expect(response).to have_http_status(:forbidden)
+        end
+      end
     end
 
     context 'Unauthenticated user' do
       let!(:answer) { create(:answer, question: question, author: user) }
 
-      it 'can not delete the question' do
+      it 'can not delete the answer' do
         expect { delete :destroy, params: { id: answer }, format: :js }.to_not change(Question, :count)
       end
       it 'redirects to login page' do
         delete :destroy, params: { id: answer }, format: :js
-        expect(response.status).to be(401)
-        expect(response.body).to have_content('You need to sign in or sign up before continuing.')
+        expect(response.status).to be(403)
       end
     end
   end
@@ -138,6 +150,22 @@ RSpec.describe AnswersController, type: :controller do
         end
       end
     end
+
+    describe 'not author updates' do
+      let(:user2) { create(:user) }
+      before { login(user2) }
+
+      it 'should not change answer' do
+        expect do
+          patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid), format: :js }
+        end.to_not change(answer, :body)
+      end
+      it 'return status 403' do
+        patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid), format: :js }
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
+
   end
 
   describe 'POST #best' do

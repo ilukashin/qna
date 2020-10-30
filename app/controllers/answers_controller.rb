@@ -7,8 +7,6 @@ class AnswersController < ApplicationController
   
   include Voted
 
-  authorize_resource
-
   def show; end
 
   def new

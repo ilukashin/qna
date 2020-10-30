@@ -116,6 +116,20 @@ RSpec.describe QuestionsController, type: :controller do
           expect(response).to redirect_to questions_path
         end
       end
+
+      context 'is not author' do
+        let(:user2) { create(:user) }
+        let!(:question) { create(:question, author: user2) }
+
+        it 'can not delete the question' do
+          expect { delete :destroy, params: { id: question } }.to_not change(Question, :count)
+        end
+        it 'redirect to index' do
+          delete :destroy, params: { id: question }, format: :js
+          expect(response.status).to eq 302
+          expect(response).to redirect_to question_path(question)
+        end
+      end
     end
 
     context 'Unauthenticated user' do
@@ -161,6 +175,21 @@ RSpec.describe QuestionsController, type: :controller do
           patch :update, params: { id: question, question: attributes_for(:question, :invalid), format: :js }
           expect(response).to render_template :update
         end
+      end
+    end
+
+    describe 'not author updates' do
+      let(:user2) { create(:user) }
+      before { login(user2) }
+
+      it 'should not change question' do
+        expect do
+          patch :update, params: { id: question, question: attributes_for(:question, :invalid), format: :js }
+        end.to_not change(question, :body)
+      end
+      it 'return status 403' do
+        patch :update, params: { id: question, question: attributes_for(:question, :invalid), format: :js }
+        expect(response).to have_http_status(:forbidden)
       end
     end
   end

@@ -19,6 +19,9 @@ class Ability
 
   def guest_abilities
     can :read, :all
+    can :authenticate, :oauth_provider
+    can :oauth_email_confirmation, User
+    can :create, User
   end
 
   def admin_abilities
@@ -44,5 +47,7 @@ class Ability
     can :destroy, ActiveStorage::Attachment do |attachment|
       user.author_of?(attachment.record)
     end
+
+    can :read, Reward
   end
 end

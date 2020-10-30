@@ -10,6 +10,9 @@ describe Ability do
     it { should be_able_to :read, Answer }
     it { should be_able_to :read, Comment }
 
+    it { should be_able_to :oauth_email_confirmation, User }
+    it { should be_able_to :authenticate, :oauth_provider }
+
     it { should_not be_able_to :manage, :all }
   end
 
@@ -34,6 +37,7 @@ describe Ability do
     it { should be_able_to :create, Question }
     it { should be_able_to :create, Answer }
     it { should be_able_to :create, Comment }
+    it { should be_able_to :read, Reward }
 
     it { should be_able_to :update, question }
     it { should_not be_able_to :update, question2 }
