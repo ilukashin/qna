@@ -45,9 +45,7 @@ feature 'add an answer to question', %q{
       visit question_path(question)
     end
     scenario 'tries to add his answer' do
-      fill_in 'Body', with: 'Custom answer'
-      click_on 'Answer'
-      expect(page).to have_content 'You need to sign in or sign up before continuing.'
+      expect(page).to_not have_button 'Answer'
     end
   end
 

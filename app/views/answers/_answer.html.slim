@@ -13,11 +13,12 @@
         -answer.files.each do |file|
           =render 'attachments/file', file: file
 
-    -if current_user&.author_of?(answer)
+    -if can?(:update, answer)
       p= link_to 'Edit answer', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+    -if can?(:destroy, answer)
       p= link_to 'Delete answer', answer_path(answer), remote: true, method: :delete
 
-    -if current_user&.author_of?(answer.question)
+    -if can?(:best, answer)
       p= link_to 'Choose best', best_answer_path(answer), remote: true, method: :post
 
     = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|

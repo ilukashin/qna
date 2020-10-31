@@ -1,4 +1,5 @@
 class OauthCallbacksController < Devise::OmniauthCallbacksController
+
   def github
     oauth_action('Github')
   end

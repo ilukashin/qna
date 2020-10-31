@@ -108,13 +108,12 @@ RSpec.describe AnswersController, type: :controller do
     context 'Unauthenticated user' do
       let!(:answer) { create(:answer, question: question, author: user) }
 
-      it 'can not delete the question' do
+      it 'can not delete the answer' do
         expect { delete :destroy, params: { id: answer }, format: :js }.to_not change(Question, :count)
       end
       it 'redirects to login page' do
         delete :destroy, params: { id: answer }, format: :js
-        expect(response.status).to be(401)
-        expect(response.body).to have_content('You need to sign in or sign up before continuing.')
+        expect(response.status).to be(403)
       end
     end
   end
@@ -166,6 +165,7 @@ RSpec.describe AnswersController, type: :controller do
         expect(response).to have_http_status(:forbidden)
       end
     end
+
   end
 
   describe 'POST #best' do

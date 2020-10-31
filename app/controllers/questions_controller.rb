@@ -6,7 +6,6 @@ class QuestionsController < ApplicationController
 
   include Voted
 
-
   def index
     @questions = Question.all
   end
