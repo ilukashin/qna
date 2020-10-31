@@ -5,13 +5,9 @@ class AttachmentsController < ApplicationController
 
   def destroy
     @question = @attachment.record
-    if current_user&.author_of?(@question)
-      @attachment.purge
-      @file_id = @attachment.id
-      render :destroy
-    else
-      render head: :forbidden, status: 403
-    end
+    @attachment.purge
+    @file_id = @attachment.id
+    render :destroy
   end
 
   def find_attachment
