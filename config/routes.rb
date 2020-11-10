@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  use_doorkeeper
   devise_for :users, path_names: { sign_in: :login, sign_out: :logout },
              controllers: { omniauth_callbacks: 'oauth_callbacks' }
   post '/oauth_email_confirmation', to: 'users#oauth_email_confirmation'
@@ -29,6 +30,17 @@ Rails.application.routes.draw do
   resources :links, only: :destroy
   resources :rewards, only: :index
   resources :comments, only: :create
+
+  namespace :api do
+    namespace :v1 do
+      resources :profiles, only: [:index] do
+        get :me, on: :collection
+      end
+      resources :questions, only: %i[index show create destroy update] do
+        resources :answers, only: %i[index show create destroy update], shallow: true
+      end
+    end
+  end
 
   mount ActionCable.server => '/cable'
 end
