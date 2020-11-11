@@ -24,6 +24,7 @@ class Api::V1::QuestionsController < Api::V1::BaseController
   end
 
   def destroy
+    authorize! :destroy, @question
     @question.destroy
     render json: { message: 'Successfully deleted question.' }, status: :ok
   end

@@ -103,7 +103,7 @@ describe 'Answers api', type: :request do
 
   describe 'DELETE /api/v1/answers/:id' do
     let(:user) { create(:user) }
-    let!(:answer) { create(:answer) }
+    let!(:answer) { create(:answer, author: user) }
     let(:api_path) { "/api/v1/answers/#{answer.id}" }
 
     it_behaves_like 'API authorizable' do
