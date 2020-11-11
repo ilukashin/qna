@@ -27,14 +27,11 @@ class Api::V1::AnswersController < Api::V1::BaseController
   end
 
   def update
-    if current_resource_owner&.author_of?(@answer)
-      if @answer.update(answer_params)
-        render json: @answer
-      else
-        render json: { errors: @answer.errors.full_messages }, status: :unprocessable_entity
-      end
+    authorize! :update, @answer
+    if @answer.update(answer_params)
+      render json: @answer
     else
-      render json: { message: 'Not authorized.' }, status: :forbidden
+      render json: { errors: @answer.errors.full_messages }, status: :unprocessable_entity
     end
   end
 

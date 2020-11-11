@@ -3,7 +3,6 @@ class Api::V1::QuestionsController < Api::V1::BaseController
   before_action :find_question, only: %i[show destroy update]
 
   skip_before_action :verify_authenticity_token, only: %i[create destroy]
-  skip_authorization_check only: [:destroy]
 
   def index
     @questions = Question.all
@@ -30,14 +29,11 @@ class Api::V1::QuestionsController < Api::V1::BaseController
   end
 
   def update
-    if current_resource_owner&.author_of?(@question)
-      if @question.update(question_params)
-        render json: @question
-      else
-        render json: { errors: @question.errors.full_messages }, status: :unprocessable_entity
-      end
+    authorize! :update, @question
+    if @question.update(question_params)
+      render json: @question
     else
-      render json: { message: 'Not authorized.' }, status: :forbidden
+      render json: { errors: @question.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
