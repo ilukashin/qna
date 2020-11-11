@@ -118,6 +118,9 @@ GEM
       concurrent-ruby (~> 1.0)
     jbuilder (2.10.0)
       activesupport (>= 5.0.0)
+    json_matchers (0.11.1)
+      json_schema
+    json_schema (0.20.9)
     jsonapi-renderer (0.2.2)
     jwt (2.2.2)
     launchy (2.5.0)
@@ -311,6 +314,7 @@ DEPENDENCIES
   factory_bot_rails
   gon
   jbuilder (~> 2.7)
+  json_matchers
   launchy
   listen (~> 3.2)
   oj

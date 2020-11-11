@@ -24,17 +24,8 @@ describe 'Profiles api', type: :request do
       end
 
       it 'returns all public fields' do
-        %w[id email admin created_at updated_at].each do |attr|
-          expect(json['user'][attr]).to eq me.send(attr).as_json
-        end
+        expect(json['user']).to match_json_schema("v1/user")
       end
-
-      it 'does not return private fields' do
-        %w[password encrypted_password].each do |attr|
-          expect(json['user'][attr]).to_not eq me.send(attr).as_json
-        end
-      end
-
     end
   end
 
@@ -62,18 +53,8 @@ describe 'Profiles api', type: :request do
       end
 
       it 'returns all public fields' do
-        %w[id created_at updated_at].each do |attr|
-          expect(user_response[attr]).to eq user.send(attr).as_json
-        end
+        expect(user_response).to match_json_schema("v1/users")
       end
-
-      it 'does not return private fields' do
-        %w[password encrypted_password].each do |attr|
-          expect(user_response[attr]).to_not eq user.send(attr).as_json
-        end
-      end
-
     end
-
   end
 end

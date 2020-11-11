@@ -29,9 +29,7 @@ describe 'Questions api', type: :request do
       end
 
       it 'returns all public fields' do
-        %w[id title body created_at updated_at].each do |attr|
-          expect(question_response[attr]).to eq question.send(attr).as_json
-        end
+        expect(question_response).to match_json_schema('v1/question')
       end
 
       it 'contains user object' do
@@ -51,9 +49,7 @@ describe 'Questions api', type: :request do
         end
 
         it 'returns all public fields' do
-          %w[id body created_at updated_at].each do |attr|
-            expect(answer_response[attr]).to eq answer.send(attr).as_json
-          end
+          expect(answer_response).to match_json_schema('v1/answer')
         end
       end
     end
@@ -86,9 +82,7 @@ describe 'Questions api', type: :request do
       end
 
       it 'returns all public fields' do
-        %w[id title body created_at updated_at].each do |attr|
-          expect(question_response[attr]).to eq question.send(attr).as_json
-        end
+        expect(question_response).to match_json_schema('v1/question')
       end
 
       it 'contains user object' do

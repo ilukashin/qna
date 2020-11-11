@@ -1,0 +1,12 @@
+{
+  "id": "111",
+  "title": "title",
+  "body": "email@example.com",
+  "links": ["links"],
+  "comments": ["comments"],
+  "files": ["files"],
+  "answers": ["answers"],
+  "author": "author",
+  "created_at": "date",
+  "updated_at": "date"
+}

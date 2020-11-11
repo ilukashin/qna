@@ -1,0 +1,7 @@
+{
+  "id": "111",
+  "email": "email@example.com",
+  "admin": true,
+  "created_at": "date",
+  "updated_at": "date"
+}

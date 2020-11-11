@@ -31,9 +31,7 @@ describe 'Answers api', type: :request do
       end
 
       it 'returns all public fields' do
-        %w[id body created_at updated_at links author].each do |attr|
-          expect(answer_response[attr]).to eq answer.send(attr).as_json
-        end
+        expect(answer_response).to match_json_schema('v1/answer')
       end
     end
   end
@@ -63,9 +61,7 @@ describe 'Answers api', type: :request do
       end
 
       it 'return all public fields of answer' do
-        %w[id body question_id created_at updated_at].each do |attr|
-          expect(answer_response[attr]).to eq answer.send(attr).as_json
-        end
+        expect(answer_response).to match_json_schema('v1/answer')
       end
 
       it 'contains user object' do
