@@ -13,6 +13,7 @@ class QuestionsController < ApplicationController
   def show
     @answer = @question.answers.new
     @answer.links.new
+    @subscription = @question.subscriptions.where(user: current_user).first
   end
 
   def new

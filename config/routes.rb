@@ -29,6 +29,8 @@ Rails.application.routes.draw do
         post :best
       end
     end
+
+    resources :subscriptions, only: %i[create destroy], shallow: true
   end
 
   resources :attachments, only: :destroy
