@@ -2,7 +2,7 @@ env:
   RUBY_VERSION: 2.6.x
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: ""
-  POSTGRES_DB: postgres
+  POSTGRES_DB: tn_qna_test
 
 name: Rails tests
 
