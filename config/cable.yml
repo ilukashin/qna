@@ -2,7 +2,9 @@ development:
   adapter: async
 
 test:
-  adapter: test
+  adapter: redis
+  :host: localhost
+  :port: 6379
 
 production:
   adapter: redis
