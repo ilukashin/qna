@@ -12,11 +12,17 @@ class Answer < ApplicationRecord
 
   validates :body, presence: true
 
+  after_create :new_answer_notification
+
   def best!
     Answer.transaction do
       question.answers.find_by(is_best: true)&.update!(is_best: false)
       update!(is_best: true)
       question.reward&.assign_to!(author)
     end unless is_best?
+  end
+
+  def new_answer_notification
+    NewAnswerNotifyJob.perform_later(self)
   end
 end
