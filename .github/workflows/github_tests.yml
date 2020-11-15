@@ -35,6 +35,16 @@ jobs:
           ruby-version: ${{ env.RUBY_VERSION }}
       - name: Install postgres client
         run: sudo apt-get install libpq-dev
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10.13.0
+
+      - name: Install packages
+        run: |
+          yarn install --pure-lockfile
+
       - name: Install dependencies
         run: |
           gem install bundler
