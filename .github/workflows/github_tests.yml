@@ -4,6 +4,7 @@ env:
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: postgres
   POSTGRES_DB: tn_qna_test
+  RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
 
 name: Rails tests
 
