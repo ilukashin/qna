@@ -30,7 +30,7 @@ class Ability
 
   def user_abilities
     guest_abilities
-    can :create, [Question, Answer, Comment]
+    can :create, [Question, Answer, Comment, Subscription]
     can %i[update destroy], [Question, Answer, Comment], author_id: user.id
     can :destroy, Link do |link|
       user.author_of?(link.linkable)
@@ -38,6 +38,8 @@ class Ability
     can :best, Answer do |answer|
       user.author_of?(answer.question)
     end
+
+    can :destroy, Subscription, user_id: user.id
 
     can :up, [Question, Answer]
     cannot :up, [Question, Answer], author_id: user.id

@@ -26,16 +26,20 @@ feature 'User can delete links', %q{
       end
 
       scenario 'can delete link form question' do
+        link_name = question.links.first.name
+
         within '.question' do
           click_on 'Delete link'
-          expect(page).to_not have_link question.links.first.name
+          expect(page).to_not have_link link_name
         end
       end
 
       scenario 'can delete link form answer' do
+        link_name = answer.links.first.name
+
         within '.answers' do
           click_on 'Delete link'
-          expect(page).to_not have_link answer.links.first.name
+          expect(page).to_not have_link link_name
         end
       end
     end

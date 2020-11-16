@@ -5,6 +5,7 @@ RSpec.describe User, type: :model do
   it { should have_many(:rewards) }
   it { should have_many(:questions) }
   it { should have_many(:answers) }
+  it { should have_many(:subscriptions).dependent(:destroy) }
   it { should have_many(:authorizations).dependent(:destroy) }
 
   describe 'validations' do

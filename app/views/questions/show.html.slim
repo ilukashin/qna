@@ -39,6 +39,20 @@
 
         = f.submit
 
+    .subscription
+      - if @subscription
+        - if can? :destroy, @subscription
+          = link_to 'Unsubscribe',
+                  subscription_path(@subscription),
+                  method: :delete,
+                  remote: true
+      - else
+        - if can?(:create, Subscription)
+          = link_to 'Subscribe',
+                  question_subscriptions_path(@question),
+                  method: :post,
+                  remote: true
+
     = render 'comments/comments', commentable: @question
 
 .answers
