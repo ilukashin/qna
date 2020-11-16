@@ -2,7 +2,7 @@ class SubscriptionsController < ApplicationController
 
   def create
     question = Question.find(params[:question_id])
-    if Subscription.where(question: question, user: current_user).empty?
+    unless Subscription.exists?(question: question, user: current_user)
       @subscription = question.subscriptions.create(user: current_user)
       render json: @subscription.id
     end
