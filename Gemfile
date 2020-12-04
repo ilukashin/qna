@@ -43,6 +43,9 @@ gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'whenever', require: false
 
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 
@@ -74,6 +77,7 @@ group :test do
   gem 'rails-controller-testing'
   gem 'launchy'
   gem 'json_matchers'
+  gem 'elasticsearch-extensions'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

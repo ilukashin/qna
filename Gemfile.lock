@@ -63,6 +63,7 @@ GEM
       zeitwerk (~> 2.2, >= 2.2.2)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
+    ansi (1.5.0)
     bcrypt (3.1.15)
     bindex (0.8.1)
     bootsnap (1.4.8)
@@ -98,6 +99,22 @@ GEM
     diff-lcs (1.4.4)
     doorkeeper (5.4.0)
       railties (>= 5)
+    elasticsearch (7.10.0)
+      elasticsearch-api (= 7.10.0)
+      elasticsearch-transport (= 7.10.0)
+    elasticsearch-api (7.10.0)
+      multi_json
+    elasticsearch-extensions (0.0.32)
+      ansi
+      elasticsearch
+    elasticsearch-model (7.1.1)
+      activesupport (> 3)
+      elasticsearch (> 1)
+      hashie
+    elasticsearch-rails (7.1.1)
+    elasticsearch-transport (7.10.0)
+      faraday (~> 1)
+      multi_json
     erubi (1.9.0)
     factory_bot (6.1.0)
       activesupport (>= 5.0.0)
@@ -329,6 +346,9 @@ DEPENDENCIES
   cocoon
   devise
   doorkeeper
+  elasticsearch-extensions
+  elasticsearch-model
+  elasticsearch-rails
   factory_bot_rails
   gon
   jbuilder (~> 2.7)
@@ -358,9 +378,6 @@ DEPENDENCIES
   webdrivers
   webpacker (~> 4.0)
   whenever
-
-RUBY VERSION
-   ruby 2.6.5p114
 
 BUNDLED WITH
    2.1.4

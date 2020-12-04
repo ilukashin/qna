@@ -1,6 +1,8 @@
 class Answer < ApplicationRecord
   include Votable
   include Commentable
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
 
   belongs_to :question
   belongs_to :author, class_name: 'User', foreign_key: 'author_id'
@@ -13,6 +15,12 @@ class Answer < ApplicationRecord
   validates :body, presence: true
 
   after_create :new_answer_notification
+
+  settings do
+    mappings dynamic: false do
+      indexes :body, type: :text
+    end
+  end
 
   def best!
     Answer.transaction do

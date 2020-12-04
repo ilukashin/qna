@@ -7,7 +7,9 @@ class AnswersController < ApplicationController
   
   include Voted
 
-  def show; end
+  def show
+    redirect_to @answer.question
+  end
 
   def new
     @answer = @question.answers.new

@@ -15,8 +15,8 @@ RSpec.describe AnswersController, type: :controller do
       expect(assigns(:answer)).to eq answer
     end
 
-    it 'renders #show view' do
-      expect(response).to render_template :show
+    it 'redirects to question' do
+      expect(response).to redirect_to(answer.question)
     end
   end
 
