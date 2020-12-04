@@ -40,8 +40,8 @@ jobs:
       elasticsearch:
         image: docker.elastic.co/elasticsearch/elasticsearch:7.9.3
         env:
-          - cluster.name: project-test-cluster
-          - network.host: 127.0.0.1
+          - ES_CLUSTER_NAME: project-test-cluster
+          - ES_NETWORK_HOST: 127.0.0.1
         ports:
           - 9350:9350
 
