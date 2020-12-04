@@ -43,7 +43,7 @@ jobs:
           ES_CLUSTER_NAME: project-test-cluster
           ES_NETWORK_HOST: 127.0.0.1
         ports:
-          - 9350:9350
+          - 9200:9350
 
     steps:
       - uses: actions/checkout@v1
