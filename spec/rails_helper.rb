@@ -31,7 +31,11 @@ Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f 
 Dir[Rails.root.join('spec', '**', 'concerns', '*.rb')].sort.each { |f| require f }
 
 
-cluster = Elasticsearch::Extensions::Test::Cluster::Cluster.new(port: 9350, number_of_nodes: 2, timeout: 60)
+cluster = Elasticsearch::Extensions::Test::Cluster::Cluster.new(port: 9350,
+                                                                number_of_nodes: 1,
+                                                                timeout: 60,
+                                                                network_host: '_local_',
+                                                                cluster_name: 'project-test-cluster')
 # Checks for pending migrations and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove these lines.
 begin

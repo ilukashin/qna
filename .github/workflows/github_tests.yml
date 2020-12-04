@@ -39,8 +39,11 @@ jobs:
 
       elasticsearch:
         image: docker.elastic.co/elasticsearch/elasticsearch:7.9.3
+        environment:
+          - cluster.name: project-test-cluster
+          - network.host: 127.0.0.1
         ports:
-          - 9200:9200
+          - 9350:9350
 
     steps:
       - uses: actions/checkout@v1
