@@ -1,15 +1,17 @@
 class SearchService
   MODELS_TO_SEARCH = [Question, Answer, Comment].freeze
 
-  def search(query)
-    data = run_elastic(query).records.to_a
+  def search(query, query_class)
+    models = query_class.empty? ? MODELS_TO_SEARCH : query_class.constantize
+
+    data = run_elastic(query, models).records.to_a
     results_mapping(data)
   end
 
   private
 
-  def run_elastic(query)
-    Elasticsearch::Model.search(query, MODELS_TO_SEARCH)
+  def run_elastic(query, models)
+    Elasticsearch::Model.search(query, models)
   end
 
   def results_mapping(data)

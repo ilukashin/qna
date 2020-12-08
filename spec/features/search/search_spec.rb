@@ -19,34 +19,52 @@ feature 'Search text on website', %q{
       visit root_path
     end
 
-    scenario 'search for questions' do
-      within '.search' do
-        fill_in 'Search', with: @question.title
-        click_on 'Go'
-      end
+    describe 'use global search' do
+      scenario 'without exact entity' do
+        within '.search' do
+          fill_in 'Search', with: @question.title
+          click_on 'Go'
+        end
 
-      expect(page).to have_link(@question.title)
-      expect(page).to have_text(@question.body)
+        expect(page).to have_link(@question.title)
+        expect(page).to have_text(@question.body)
+      end
     end
 
-    scenario 'search for answer' do
-      within '.search' do
-        fill_in 'Search', with: @answer.body
-        click_on 'Go'
+    describe 'user search with exact entity' do
+
+      scenario 'search for questions' do
+        within '.search' do
+          fill_in 'Search', with: @question.title
+          select('Question')
+          click_on 'Go'
+        end
+
+        expect(page).to have_link(@question.title)
+        expect(page).to have_text(@question.body)
       end
 
-      expect(page).to have_link(@answer.question.title)
-      expect(page).to have_text(@answer.body)
-    end
+      scenario 'search for answer' do
+        within '.search' do
+          fill_in 'Search', with: @answer.body
+          select('Answer')
+          click_on 'Go'
+        end
 
-    scenario 'search for comments' do
-      within '.search' do
-        fill_in 'Search', with: @comment.body
-        click_on 'Go'
+        expect(page).to have_link(@answer.question.title)
+        expect(page).to have_text(@answer.body)
       end
 
-      expect(page).to have_link(@comment.commentable.title)
-      expect(page).to have_text(@comment.body)
+      scenario 'search for comments' do
+        within '.search' do
+          fill_in 'Search', with: @comment.body
+          select('Comment')
+          click_on 'Go'
+        end
+
+        expect(page).to have_link(@comment.commentable.title)
+        expect(page).to have_text(@comment.body)
+      end
     end
   end
 
@@ -55,34 +73,51 @@ feature 'Search text on website', %q{
       visit root_path
     end
 
-    scenario 'search for questions' do
-      within '.search' do
-        fill_in 'Search', with: @question.title
-        click_on 'Go'
-      end
+    describe 'use global search' do
+      scenario 'without exact entity' do
+        within '.search' do
+          fill_in 'Search', with: @question.title
+          click_on 'Go'
+        end
 
-      expect(page).to have_link(@question.title)
-      expect(page).to have_text(@question.body)
+        expect(page).to have_link(@question.title)
+        expect(page).to have_text(@question.body)
+      end
     end
 
-    scenario 'search for answer' do
-      within '.search' do
-        fill_in 'Search', with: @answer.body
-        click_on 'Go'
+    describe 'user search with exact entity' do
+      scenario 'search for questions' do
+        within '.search' do
+          fill_in 'Search', with: @question.title
+          select('Question')
+          click_on 'Go'
+        end
+
+        expect(page).to have_link(@question.title)
+        expect(page).to have_text(@question.body)
       end
 
-      expect(page).to have_link(@answer.question.title)
-      expect(page).to have_text(@answer.body)
-    end
+      scenario 'search for answer' do
+        within '.search' do
+          fill_in 'Search', with: @answer.body
+          select('Answer')
+          click_on 'Go'
+        end
 
-    scenario 'search for comments' do
-      within '.search' do
-        fill_in 'Search', with: @comment.body
-        click_on 'Go'
+        expect(page).to have_link(@answer.question.title)
+        expect(page).to have_text(@answer.body)
       end
 
-      expect(page).to have_link(@comment.commentable.title)
-      expect(page).to have_text(@comment.body)
+      scenario 'search for comments' do
+        within '.search' do
+          fill_in 'Search', with: @comment.body
+          select('Comment')
+          click_on 'Go'
+        end
+
+        expect(page).to have_link(@comment.commentable.title)
+        expect(page).to have_text(@comment.body)
+      end
     end
   end
 end

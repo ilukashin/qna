@@ -5,7 +5,7 @@ class SearchController < ApplicationController
 
   def search
     if query.present?
-      @results = SearchService.new.search(query)
+      @results = SearchService.new.search(query, query_params[:query_class])
     end
 
     render :results
@@ -13,7 +13,11 @@ class SearchController < ApplicationController
 
   private
 
+  def query_params
+    params.require(:search).permit(:query, :query_class)
+  end
+
   def query
-    @query ||= params[:search][:query]
+    @query ||= query_params[:query]
   end
 end
