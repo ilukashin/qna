@@ -62,6 +62,7 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
   config.action_mailer.default_url_options = { host: '109.248.203.54' }
+  config.action_mailer.default_options = {from: 'no-reply@qna.com'}
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
       address: 'smtp.gmail.com',
