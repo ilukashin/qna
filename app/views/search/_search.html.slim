@@ -1,0 +1,7 @@
+.search
+  = form_for :search, url: search_path, method: :get do |form|
+    = form.label :query, 'Search for:'
+    = form.text_field :query, value: params[:query]
+    = form.collection_select :query_class,
+            SearchService::MODELS_TO_SEARCH, :to_s, :to_s, include_blank: true
+    = form.submit 'Go'

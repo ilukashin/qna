@@ -1,8 +1,12 @@
 class CommentsController < ApplicationController
   before_action :find_commentable
-  before_action :authenticate_user!
+  before_action :authenticate_user!, only: :create
 
   after_action :publish_comment, only: %i[create]
+
+  def show
+    redirect_to Comment.find(params[:id]).commentable
+  end
 
   def create
     @comment = Comment.new(comment_params)

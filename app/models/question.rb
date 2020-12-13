@@ -1,6 +1,8 @@
 class Question < ApplicationRecord
   include Votable
   include Commentable
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
 
   belongs_to :author, class_name: 'User', foreign_key: 'author_id'
   has_many :answers, dependent: :destroy
@@ -14,4 +16,11 @@ class Question < ApplicationRecord
   accepts_nested_attributes_for :reward, reject_if: :all_blank
 
   validates :title, :body, presence: true
+
+  settings do
+    mappings dynamic: false do
+      indexes :title, type: :text
+      indexes :body, type: :text
+    end
+  end
 end

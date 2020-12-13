@@ -10,6 +10,7 @@ Rails.application.routes.draw do
              controllers: { omniauth_callbacks: 'oauth_callbacks' }
   post '/oauth_email_confirmation', to: 'users#oauth_email_confirmation'
   root 'questions#index'
+  get '/search' => 'search#search'
 
   concern :votable do
     member do
@@ -36,7 +37,7 @@ Rails.application.routes.draw do
   resources :attachments, only: :destroy
   resources :links, only: :destroy
   resources :rewards, only: :index
-  resources :comments, only: :create
+  resources :comments, only: [:create, :show]
 
   namespace :api do
     namespace :v1 do

@@ -1,0 +1,12 @@
+.results
+  h2= "Searching results for '#{@query.truncate(15)}'"
+
+
+  - unless @results.empty?
+    ul
+      - @results.each do |result|
+        li
+          = link_to result[:title].truncate(20), controller: result[:controller], action: 'show', id: result[:id]
+          p= result[:details].truncate(100)
+  - else
+    = 'No matches found'
