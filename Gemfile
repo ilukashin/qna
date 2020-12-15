@@ -46,6 +46,7 @@ gem 'whenever', require: false
 gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
 
+gem 'unicorn'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 
@@ -72,6 +73,7 @@ group :development do
   gem 'capistrano-rvm', require: false
   gem 'capistrano-passenger', require: false
   gem 'capistrano-sidekiq', require: false
+  gem 'capistrano3-unicorn', require: false
 end
 
 group :test do
