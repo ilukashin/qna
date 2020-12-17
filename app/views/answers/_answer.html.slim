@@ -1,40 +1,41 @@
 -if answer.persisted?
+  - cache answer do
 
-  div id="answer-#{answer.id}" class=('best' if answer.is_best?)
-    div class="errors"
-    p= answer.body
-    =render 'shared/rating', entity_obj: answer
+    div id="answer-#{answer.id}" class=('best' if answer.is_best?)
+      div class="errors"
+      p= answer.body
+      =render 'shared/rating', entity_obj: answer
 
-    - unless answer.links.empty?
-      = render 'links/links', resource: answer
+      - unless answer.links.empty?
+        = render 'links/links', resource: answer
 
-    .answer-files
-      -if answer.files.attached?
-        -answer.files.each do |file|
-          =render 'attachments/file', file: file
+      .answer-files
+        -if answer.files.attached?
+          -answer.files.each do |file|
+            =render 'attachments/file', file: file
 
-    -if can?(:update, answer)
-      p= link_to 'Edit answer', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
-    -if can?(:destroy, answer)
-      p= link_to 'Delete answer', answer_path(answer), remote: true, method: :delete
+      -if can?(:update, answer)
+        p= link_to 'Edit answer', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+      -if can?(:destroy, answer)
+        p= link_to 'Delete answer', answer_path(answer), remote: true, method: :delete
 
-    -if can?(:best, answer)
-      p= link_to 'Choose best', best_answer_path(answer), remote: true, method: :post
+      -if can?(:best, answer)
+        p= link_to 'Choose best', best_answer_path(answer), remote: true, method: :post
 
-    = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
-      = f.label :body
-      = f.text_area :body
+      = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
+        = f.label :body
+        = f.text_area :body
 
-      = f.label :files
-      = f.file_field :files, multiple: true, direct_upload: true
+        = f.label :files
+        = f.file_field :files, multiple: true, direct_upload: true
 
-      .links-form
-        p Links:
-        #question-links
-          = f.fields_for :links do |l|
-            = render 'links/form', f: l
-          = link_to_add_association 'Add link', f, :links, partial: 'links/form'
+        .links-form
+          p Links:
+          #question-links
+            = f.fields_for :links do |l|
+              = render 'links/form', f: l
+            = link_to_add_association 'Add link', f, :links, partial: 'links/form'
 
-      = f.submit
+        = f.submit
 
-    = render 'comments/comments', commentable: answer
+      = render 'comments/comments', commentable: answer

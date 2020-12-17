@@ -1,4 +1,5 @@
-.comment
-  p= comment.body
-  p= "Author: #{comment.author.email}"
+- cache comment do
+  .comment
+    p= comment.body
+    p= "Author: #{comment.author.email}"
 
